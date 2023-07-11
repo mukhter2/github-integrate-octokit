@@ -1,5 +1,6 @@
 const { Octokit } = require("@octokit/rest");
-const { response } = require("express");
+const { express } = require("express");
+
 require("dotenv").config()
 const octokit = new Octokit({
     auth: process.env.ACCESS_TOKEN
@@ -41,4 +42,18 @@ async function deleteRepo(){
     repo:"automated-repoCreation2",
   }).then((response)=> console.log(response.status));
 }
-module.exports={getUser,createGithubRepo,createFork,createIssue,deleteRepo};
+
+async function createPull({owner,repo,head,base,title}){
+  const vl=await octokit.rest.pulls.create({
+    owner: owner,
+    repo: repo,
+    head: head,
+    base: base,
+    title: title
+  }).then((res)=>{
+    return res;
+
+  });
+  return vl;
+}
+module.exports={getUser,createGithubRepo,createFork,createIssue,deleteRepo,createPull};
