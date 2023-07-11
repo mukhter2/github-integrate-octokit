@@ -8,7 +8,7 @@ const octokit = new Octokit({
   //get user info
 async function getUser (){
     const { data } = await octokit.request("/user");
-    console.log(data);
+    return data;
 }
 
 //create a repository
